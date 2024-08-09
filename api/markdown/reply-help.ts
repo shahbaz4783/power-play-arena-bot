@@ -1,6 +1,6 @@
-export const replyStartCaption = (name: string) => {
+export const replyHelpCaption = () => {
 	return `
-Hey *${name}\\!* Welcome to Powerplay Arena\\!
+This guide will help you navigate through the bot features and make the most out of your gaming experience\\.
 
 *Compete in thrilling games\\:* Challenge yourself and others in a variety of mini\\-games designed to test your skills and reflexes\\.
 
@@ -9,5 +9,7 @@ Hey *${name}\\!* Welcome to Powerplay Arena\\!
 *Stay updated\\:* Get the latest updates and news about new games and features directly within the app
 
 *Seamless experience\\:* Enjoy a smooth and user\\-friendly interface that makes gaming easy and enjoyable\\.
-  `;
+
+If you have any questions or need further assistance\\, feel free to reach out to our support team\\.
+    `;
 };
