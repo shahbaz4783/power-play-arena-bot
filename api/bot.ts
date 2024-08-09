@@ -3,8 +3,8 @@ import express from 'express';
 import { Bot, InlineKeyboard, webhookCallback } from 'grammy';
 
 const bot = new Bot(process.env.BOT_TOKEN!);
-
 const image = process.env.IMAGE_START!;
+const miniAppURL = process.env.MINI_APP_URL!;
 
 bot.command('start', async (ctx) => {
 	console.table({
@@ -14,7 +14,7 @@ bot.command('start', async (ctx) => {
 	});
 
 	const keyboard = new InlineKeyboard()
-		.url('Enter the Arena', process.env.MINI_APP_URL!)
+		.url('Enter the Arena', miniAppURL)
 		.row()
 		.text('Explore Guide', 'explore_guide')
 		.row()
