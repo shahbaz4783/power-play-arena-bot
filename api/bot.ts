@@ -11,6 +11,7 @@ bot.command('start', startListener);
 const app = express();
 app.use(express.json());
 
+app.get('/', homeRoute);
 app.get('/api/bot', homeRoute);
 
 app.use(webhookCallback(bot, 'express'));
