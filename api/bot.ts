@@ -3,7 +3,8 @@ import express from 'express';
 import { Bot, InlineKeyboard, webhookCallback } from 'grammy';
 
 const bot = new Bot(process.env.BOT_TOKEN!);
-const image = process.env.IMAGE_START!;
+const image =
+	'https://res.cloudinary.com/dw2o2w9zg/image/upload/v1723190218/Untitled_1_wqondb.png';
 
 bot.command('start', async (ctx) => {
 	console.table({
