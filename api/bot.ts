@@ -4,7 +4,15 @@ import { Bot, InlineKeyboard, webhookCallback } from 'grammy';
 
 const bot = new Bot(process.env.BOT_TOKEN!);
 
+const image = process.env.IMAGE_START!;
+
 bot.command('start', async (ctx) => {
+	console.table({
+		command: '/start',
+		name: ctx.from?.first_name,
+		username: ctx.from?.username,
+	});
+
 	const keyboard = new InlineKeyboard()
 		.url('Enter the Arena', process.env.MINI_APP_URL!)
 		.row()
@@ -12,24 +20,11 @@ bot.command('start', async (ctx) => {
 		.row()
 		.text('Tap to Earn', 'tap_to_earn');
 
-	await ctx.replyWithPhoto(
-		'https://res.cloudinary.com/dw2o2w9zg/image/upload/v1723190218/Untitled_1_wqondb.png',
-		{
-			caption: `
-**Hello ${ctx.from?.first_name}**
-
-Welcome to Power Play Arena, your ultimate destination for engaging and interactive mini-games! Dive into a world of fun and excitement where you can:
-
-- **Compete in thrilling games**: Challenge yourself and others in a variety of mini-games designed to test your skills and reflexes.
-- **Earn rewards**: Collect points and earn rewards as you play. The more you play, the more you win!
-- **Stay updated**: Get the latest updates and news about new games and features directly within the app.
-- **Seamless experience**: Enjoy a smooth and user-friendly interface that makes gaming easy and enjoyable.
-
-Join the Power Play Arena community today and start your adventure!
-`,
-			reply_markup: keyboard,
-		}
-	);
+	await ctx.replyWithPhoto(image, {
+		caption: `*Hello ${ctx.from?.first_name}*`,
+		parse_mode: 'MarkdownV2',
+		reply_markup: keyboard,
+	});
 });
 
 const app = express();
