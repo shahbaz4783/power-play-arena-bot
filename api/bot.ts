@@ -6,15 +6,25 @@ const bot = new Bot(process.env.BOT_TOKEN!);
 
 bot.command('start', async (ctx) => {
 	const keyboard = new InlineKeyboard()
-		.url('Open Mini App', 'https://t.me/bot_nextjs_bot/start')
+		.url('Enter the Arena', process.env.MINI_APP_URL!)
 		.row()
 		.text('Explore Guide', 'explore_guide')
 		.row()
 		.text('Tap to Earn', 'tap_to_earn');
 
-	await ctx.replyWithPhoto('https://grammy.dev/images/grammY.png', {
-		caption:
-			'Welcome to Powerplay Arena! Tap on the buttons below to get started.',
+	await ctx.replyWithPhoto(process.env.IMAGE_START!, {
+		caption: `
+**Hello ${ctx.from?.first_name}**
+
+Welcome to Power Play Arena, your ultimate destination for engaging and interactive mini-games! Dive into a world of fun and excitement where you can:
+
+- **Compete in thrilling games**: Challenge yourself and others in a variety of mini-games designed to test your skills and reflexes.
+- **Earn rewards**: Collect points and earn rewards as you play. The more you play, the more you win!
+- **Stay updated**: Get the latest updates and news about new games and features directly within the app.
+- **Seamless experience**: Enjoy a smooth and user-friendly interface that makes gaming easy and enjoyable.
+
+Join the Power Play Arena community today and start your adventure!
+`,
 		reply_markup: keyboard,
 	});
 });
