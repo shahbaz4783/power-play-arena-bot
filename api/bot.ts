@@ -1,34 +1,17 @@
 import 'dotenv/config';
 import express from 'express';
-import { Bot, InlineKeyboard, webhookCallback } from 'grammy';
+import { Bot, webhookCallback } from 'grammy';
+import { startListener } from './controllers/listeners.js';
+import { homeRoute } from './controllers/routes.js';
 
 const bot = new Bot(process.env.BOT_TOKEN!);
-const image =
-	'https://res.cloudinary.com/dw2o2w9zg/image/upload/v1723190218/Untitled_1_wqondb.png';
 
-bot.command('start', async (ctx) => {
-	console.table({
-		command: '/start',
-		name: ctx.from?.first_name,
-		username: ctx.from?.username,
-	});
-
-	const keyboard = new InlineKeyboard()
-		.url('Enter the Arena', 'https://t.me/powerplay_arena_bot/start')
-		.row()
-		.text('Explore Guide', 'explore_guide')
-		.row()
-		.text('Tap to Earn', 'tap_to_earn');
-
-	await ctx.replyWithPhoto(image, {
-		caption: `*Hello ${ctx.from?.first_name}*`,
-		parse_mode: 'MarkdownV2',
-		reply_markup: keyboard,
-	});
-});
+bot.command('start', startListener);
 
 const app = express();
 app.use(express.json());
+
+app.get('/api/bot', homeRoute);
 
 app.use(webhookCallback(bot, 'express'));
 
