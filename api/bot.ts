@@ -4,10 +4,6 @@ import { Bot, InlineKeyboard, webhookCallback } from 'grammy';
 
 const bot = new Bot(process.env.BOT_TOKEN!);
 
-const photoUrl =
-	process.env.IMAGE_START ||
-	'https://res.cloudinary.com/dw2o2w9zg/image/upload/v1723190218/Untitled_1_wqondb.png';
-
 bot.command('start', async (ctx) => {
 	const keyboard = new InlineKeyboard()
 		.url('Enter the Arena', process.env.MINI_APP_URL!)
@@ -16,8 +12,10 @@ bot.command('start', async (ctx) => {
 		.row()
 		.text('Tap to Earn', 'tap_to_earn');
 
-	await ctx.replyWithPhoto(photoUrl, {
-		caption: `
+	await ctx.replyWithPhoto(
+		'https://res.cloudinary.com/dw2o2w9zg/image/upload/v1723190218/Untitled_1_wqondb.png',
+		{
+			caption: `
 **Hello ${ctx.from?.first_name}**
 
 Welcome to Power Play Arena, your ultimate destination for engaging and interactive mini-games! Dive into a world of fun and excitement where you can:
@@ -29,8 +27,9 @@ Welcome to Power Play Arena, your ultimate destination for engaging and interact
 
 Join the Power Play Arena community today and start your adventure!
 `,
-		reply_markup: keyboard,
-	});
+			reply_markup: keyboard,
+		}
+	);
 });
 
 const app = express();
