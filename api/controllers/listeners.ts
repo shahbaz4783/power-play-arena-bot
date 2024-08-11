@@ -12,7 +12,7 @@ import { replySocialsCaption } from '../markdown/reply-socials.js';
 const image =
 	'https://res.cloudinary.com/dw2o2w9zg/image/upload/v1723190218/Untitled_1_wqondb.png';
 const webAppURL = 'https://t.me/powerplay_arena_bot/start';
-const communityChatURL = 'https://t.me/@powerplay_arena';
+const communityChatURL = 'https://t.me/powerplay_arena';
 const ceoTwitterURL = 'https://x.com/shahbaz4783';
 const websiteURL = 'https://powerplay-arena.vercel.app';
 
