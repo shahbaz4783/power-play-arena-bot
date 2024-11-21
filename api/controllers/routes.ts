@@ -3,8 +3,7 @@ import { Request, Response } from 'express';
 export const homeRoute = (req: Request, res: Response) => {
 	res.status(200).json({
 		name: 'Power Play Arena Bot',
-		description:
-			'Your ultimate destination for engaging and interactive mini-games!',
+		description: 'Your ultimate destination',
 		features: [
 			'Compete in thrilling games',
 			'Earn rewards',
