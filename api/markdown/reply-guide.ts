@@ -12,7 +12,7 @@ Three exciting formats to test your skills\\:
 🎲 *Coin Toss Game\\:*
 Test your luck with four exciting coin toss options\\:
 
-• Safe Bet\\: 75\\% chance\\, 1.25x payout
+• Safe Bet\\: 75\\% chance\\, 1\\.25x payout
 • Classic Flip\\: 50% chance\\, 2x payout
 • Triple Shot\\: 33% chance\\, 3x payout
 • Jackpot\\: 20\\% chance\\, 5x payout
