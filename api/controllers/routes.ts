@@ -13,6 +13,7 @@ export const homeRoute = (req: Request, res: Response) => {
 		commands: [
 			'/start - Start interacting with the bot',
 			'/help - Get help on how to use the bot',
+			'/guide - Brief info about the game',
 		],
 	});
 };

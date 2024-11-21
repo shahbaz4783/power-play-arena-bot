@@ -8,6 +8,7 @@ import {
 import { replyStartCaption } from '../markdown/reply-start.js';
 import { replyHelpCaption } from '../markdown/reply-help.js';
 import { replySocialsCaption } from '../markdown/reply-socials.js';
+import { replyGuideCaption } from '../markdown/reply-guide.js';
 
 const image =
 	'https://res.cloudinary.com/dw2o2w9zg/image/upload/v1732206295/game-poster_vzkvuc.jpg';
@@ -47,6 +48,25 @@ export const startListener = async (ctx: Context) => {
 export const helpListener = async (ctx: Context) => {
 	try {
 		await ctx.reply(replyHelpCaption(), {
+			parse_mode: 'MarkdownV2',
+		});
+	} catch (error) {
+		if (error instanceof BotError) {
+			console.log('Bot Error: ' + error.message);
+		} else if (error instanceof HttpError) {
+			console.log('HTTP Error: ' + error.message);
+		} else if (error instanceof GrammyError) {
+			console.log('Grammy Error: ' + error.message);
+		} else {
+			console.log('Someting went wrong');
+		}
+	}
+};
+
+// guide command listener
+export const guideListener = async (ctx: Context) => {
+	try {
+		await ctx.reply(replyGuideCaption(), {
 			parse_mode: 'MarkdownV2',
 		});
 	} catch (error) {
