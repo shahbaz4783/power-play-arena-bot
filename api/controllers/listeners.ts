@@ -10,7 +10,7 @@ import { replyHelpCaption } from '../markdown/reply-help.js';
 import { replySocialsCaption } from '../markdown/reply-socials.js';
 
 const image =
-	'https://res.cloudinary.com/dw2o2w9zg/image/upload/v1723190218/Untitled_1_wqondb.png';
+	'https://res.cloudinary.com/dw2o2w9zg/image/upload/v1732206295/game-poster_vzkvuc.jpg';
 const webAppURL = 'https://t.me/powerplay_arena_bot/start';
 const communityChatURL = 'https://t.me/powerplay_arena';
 const ceoTwitterURL = 'https://x.com/shahbaz4783';
