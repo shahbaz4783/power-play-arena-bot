@@ -1,9 +1,10 @@
 import 'dotenv/config';
 import express from 'express';
-import { Bot, webhookCallback } from 'grammy';
+import { Bot, Context, webhookCallback } from 'grammy';
 import {
 	guideListener,
 	helpListener,
+	paymentListener,
 	socialsListener,
 	startListener,
 } from './controllers/listeners.js';
@@ -20,6 +21,7 @@ async function setCommandsWithRetry(maxRetries = 5) {
 				{ command: 'help', description: 'Show help' },
 				{ command: 'guide', description: 'Game guide' },
 				{ command: 'socials', description: 'Join community' },
+				{ command: 'pay', description: 'Pay 1 Star' },
 			]);
 			console.log('Bot commands set successfully');
 			return;
@@ -39,6 +41,13 @@ bot.command('start', startListener);
 bot.command('guide', guideListener);
 bot.command('help', helpListener);
 bot.command('socials', socialsListener);
+bot.command('pay', paymentListener);
+
+bot.on('pre_checkout_query', async (ctx: Context) => {
+	return ctx.answerPreCheckoutQuery(true).catch(() => {
+		console.error('answerPreCheckoutQuery failed');
+	});
+});
 
 const app = express();
 app.use(express.json());

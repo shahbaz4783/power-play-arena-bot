@@ -109,3 +109,28 @@ export const socialsListener = async (ctx: Context) => {
 		}
 	}
 };
+
+// payment command listener
+export const paymentListener = async (ctx: Context) => {
+	try {
+		return ctx.replyWithInvoice(
+			'Test Product',
+			'Test description',
+			'{}',
+			'XTR',
+			[
+				{ amount: 1, label: 'Test Product' },
+			]
+		);
+	} catch (error) {
+		if (error instanceof BotError) {
+			console.log('Bot Error: ' + error.message);
+		} else if (error instanceof HttpError) {
+			console.log('HTTP Error: ' + error.message);
+		} else if (error instanceof GrammyError) {
+			console.log('Grammy Error: ' + error.message);
+		} else {
+			console.log('Someting went wrong');
+		}
+	}
+};
