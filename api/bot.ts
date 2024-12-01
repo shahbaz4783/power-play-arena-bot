@@ -1,14 +1,17 @@
 import 'dotenv/config';
 import express from 'express';
-import { Bot, Context, webhookCallback } from 'grammy';
-import {
-	guideListener,
-	helpListener,
-	paymentListener,
-	socialsListener,
-	startListener,
-} from './controllers/listeners.js';
+import { Bot, webhookCallback } from 'grammy';
 import { homeRoute } from './controllers/routes.js';
+import { startListener } from './controllers/start-listener.js';
+import { helpListener } from './controllers/help-listener.js';
+import {
+	dailyBountyListener,
+	fortuneFlipListener,
+	leaderboardListener,
+	milestonesListener,
+	powerStrikeListener,
+	referListener,
+} from './controllers/guide-listener.js';
 
 const bot = new Bot(process.env.BOT_TOKEN!);
 
@@ -18,10 +21,7 @@ async function setCommandsWithRetry(maxRetries = 5) {
 		try {
 			await bot.api.setMyCommands([
 				{ command: 'start', description: 'Enter the arena' },
-				{ command: 'help', description: 'Show help' },
-				{ command: 'guide', description: 'Game guide' },
-				{ command: 'socials', description: 'Join community' },
-				{ command: 'pay', description: 'Pay 1 Star' },
+				{ command: 'help', description: 'Help' },
 			]);
 			console.log('Bot commands set successfully');
 			return;
@@ -38,15 +38,34 @@ async function setCommandsWithRetry(maxRetries = 5) {
 setCommandsWithRetry();
 
 bot.command('start', startListener);
-bot.command('guide', guideListener);
 bot.command('help', helpListener);
-bot.command('socials', socialsListener);
-bot.command('pay', paymentListener);
 
-bot.on('pre_checkout_query', async (ctx: Context) => {
-	return ctx.answerPreCheckoutQuery(true).catch(() => {
-		console.error('answerPreCheckoutQuery failed');
-	});
+bot.on('callback_query', async (ctx) => {
+	const callbackData = ctx.callbackQuery.data;
+	if (callbackData === 'help_command') {
+		await helpListener(ctx);
+	}
+	if (callbackData === 'refer') {
+		referListener(ctx);
+	}
+	if (callbackData === 'daily_bounty') {
+		dailyBountyListener(ctx);
+	}
+	if (callbackData === 'power_strike') {
+		powerStrikeListener(ctx);
+	}
+	if (callbackData === 'fortune_flip') {
+		fortuneFlipListener(ctx);
+	}
+	if (callbackData === 'leaderboard') {
+		leaderboardListener(ctx);
+	}
+	if (callbackData === 'milestones') {
+		milestonesListener(ctx);
+	}
+	if (callbackData === '/close') {
+		await ctx.deleteMessage();
+	}
 });
 
 const app = express();
