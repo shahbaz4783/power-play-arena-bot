@@ -1,17 +1,19 @@
 import { BotError, Context, GrammyError, HttpError } from 'grammy';
 
 export const handleBotError = async (error: unknown, ctx: Context) => {
-	await ctx.reply(
-		'🚨 Oops! Something went wrong while processing your request. Please try again later.'
-	);
+	console.log(error);
 	if (error instanceof BotError) {
+		await ctx.reply('Bot Error: ' + error.message);
 		console.log('Bot Error: ' + error.message);
 	} else if (error instanceof HttpError) {
+		await ctx.reply('HTTP Error: ' + error.message);
 		console.log('HTTP Error: ' + error.message);
 	} else if (error instanceof GrammyError) {
-		console.log('Grammy Error: ' + error.message);
+		ctx.reply('Grammy Error: ' + error.message);
 		console.log('Grammy Error: ' + error.message);
 	} else {
-		ctx.reply('Something went wrong. Please try again later.');
+		ctx.reply(
+			'Oops! Something went wrong while processing your request. Please try again later.'
+		);
 	}
 };

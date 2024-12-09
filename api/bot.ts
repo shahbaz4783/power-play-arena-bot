@@ -68,6 +68,29 @@ bot.on('callback_query', async (ctx) => {
 	}
 });
 
+bot.on('pre_checkout_query', async (ctx) => {
+	try {
+		const { id, from, currency, total_amount, invoice_payload } =
+			ctx.preCheckoutQuery;
+
+		console.log('Pre-Checkout Query:', {
+			id,
+			from,
+			currency,
+			total_amount,
+			payload: invoice_payload,
+		});
+
+		await ctx.answerPreCheckoutQuery(true);
+	} catch (error) {
+		console.error('Failed to answer Pre-Checkout Query:', error);
+		await ctx.answerPreCheckoutQuery(false, {
+			error_message:
+				'There was an issue processing your payment. Please try again.',
+		});
+	}
+});
+
 const app = express();
 app.use(express.json());
 

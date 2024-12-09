@@ -1,6 +1,17 @@
-export const replyStartCaption = (name: string) => {
+export const replyStartCaption = (
+	name: string,
+	isNewUser: boolean,
+	isReferred: boolean,
+	referrerName?: string
+) => {
+	const greeting = isNewUser ? 'Welcome to' : 'Welcome Back to';
+	const referralMessage =
+		isReferred && referrerName
+			? `\n\n🎊 You've been referred by ${referrerName}. Start earning together! 💼`
+			: '';
+
 	return `
-Welcome to <strong>PowerPlay Arena</strong>, ${name}!
+${greeting} <strong>PowerPlay Arena</strong>, ${name}! ${referralMessage}
 
 🏏 Dive into the excitement of cricket like never before. 
 
