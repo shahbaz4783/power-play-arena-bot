@@ -14,6 +14,7 @@ import {
 } from './controllers/guide-listener.js';
 import axios from 'axios';
 import { API_URL } from './lib/config.js';
+import { handleBotError } from './lib/bot-error.js';
 
 const bot = new Bot(process.env.BOT_TOKEN!);
 
@@ -72,17 +73,7 @@ bot.on('callback_query', async (ctx) => {
 
 bot.on('pre_checkout_query', async (ctx) => {
 	try {
-		const { id, from, currency, total_amount, invoice_payload } =
-			ctx.preCheckoutQuery;
-
-		console.log('Pre-Checkout Query:', {
-			id,
-			from,
-			currency,
-			total_amount,
-			payload: invoice_payload,
-		});
-
+		console.log(ctx.preCheckoutQuery);
 		await ctx.answerPreCheckoutQuery(true);
 	} catch (error) {
 		console.error('Failed to answer Pre-Checkout Query:', error);
@@ -95,28 +86,25 @@ bot.on('pre_checkout_query', async (ctx) => {
 
 bot.on('message:successful_payment', async (ctx) => {
 	try {
-		const { successful_payment } = ctx.message!;
+		const { successful_payment } = ctx.message;
 		if (!successful_payment || !ctx.from) return;
 
 		const { telegram_payment_charge_id, total_amount, invoice_payload } =
 			successful_payment;
 
-		const userId = ctx.from.id.toString();
+		const telegramId = ctx.from.id.toString();
 		const payloadData = JSON.parse(invoice_payload);
 
-		console.log('Payment payload:', payloadData);
+		const { itemId, title } = payloadData;
 
-		const { itemId } = payloadData;
-
-		const response = await axios.post(
+		await axios.post(
 			`${API_URL}/api/payment-success`,
 			{
-				telegramId: userId,
+				itemId,
+				telegramId,
 				paymentId: telegram_payment_charge_id,
 				amount: total_amount,
-				itemId,
-				title: payloadData.title || 'Item purchase',
-				description: payloadData.description || 'No description provided',
+				title,
 			},
 			{
 				headers: {
@@ -124,15 +112,10 @@ bot.on('message:successful_payment', async (ctx) => {
 				},
 			}
 		);
-
-		await ctx.reply(response.data || 'Your purchase was successful!');
 	} catch (error) {
-		await ctx.reply(
-			'There was an error processing your purchase. Please contact support.'
-		);
+		handleBotError(error, ctx);
 	}
 });
-
 
 
 const app = express();

@@ -34,6 +34,17 @@ export const replyHelpCaption = () => {
   `;
 };
 
+export const replySuccessPurchase = async (data: any) => {
+	return `You successfully bought  
+
+	Item: ${data.itemId}
+	Name: ${data.description}
+	description: ${data.metadata.itemDescription}
+	Cost: ${data.starAmount}
+
+  `;
+};
+
 export const replyReferCaption = () => {
 	return `💸 Refer & Earn Program 
 

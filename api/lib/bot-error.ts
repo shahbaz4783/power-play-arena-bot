@@ -12,8 +12,6 @@ export const handleBotError = async (error: unknown, ctx: Context) => {
 		ctx.reply('Grammy Error: ' + error.message);
 		console.log('Grammy Error: ' + error.message);
 	} else {
-		ctx.reply(
-			'Oops! Something went wrong while processing your request. Please try again later.'
-		);
+		ctx.reply('Oops! Something went wrong while processing your request.');
 	}
 };
